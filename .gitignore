@@ -1,0 +1,12 @@
+data/
+
+**/.cache
+**/.jupyter 
+**/.ipython
+**/.local
+**/.DS_Store
+**/.ipynb_checkpoints
+**/.bash_history
+**/.viminfo
+.sublime-project
+.sublime-workspace
