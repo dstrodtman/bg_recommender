@@ -20,7 +20,7 @@ def make_lookup(gnames_dict):
 
     return gname, gs, gid
 
-def gname(gs_list):
+def search_gname(gs_list):
     '''
     Return of list of gnames from list of gs.
     '''
