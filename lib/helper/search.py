@@ -19,3 +19,9 @@ def make_lookup(gnames_dict):
         gid[row['gs']-1] = row['gid']
 
     return gname, gs, gid
+
+def gname(gs_list):
+    '''
+    Return of list of gnames from list of gs.
+    '''
+    return [gname[gs] for gs in gs_list]
