@@ -170,6 +170,10 @@ My final recommendation function allows users to express interest in any number 
 
 However, I was still able to build out a model that I feel is successful at making accurate, personalized recommendations with minimal processing time. My model approaches the data through two avenues in parallel: the top 100 most similar games for each rated item are thrown into a two bags of items, one based on item-item correlation, and the other based on feature consine similarity. These bags are then passed to the other similarity matrix, where similarity scores between rated items and bagged items are summed and multiplied by the average rating for each game. These item residuals are then scaled, summed, and rank ordered (currently I'm using 70/30 in favor of the items pulled by features before looking at item-item relationship).
 
+### *NEXT STEPS*
+
 I hope to fine tune my predictions metrics once I am able to better reduce the presence of expansions, but as they are presently overreprented in both item-item correlation and feature similarity, I feel extremely limited in roads forward without significant investment of manual labor.
+
+However, I am aware that my prediction metric is rather blunt, and that there are likely more nuanced ways to integrate the multiple relationships that I've modeled. Specifically, I am interested in exploring user-item recommendations through use of decomposition of user ratings, and factoring in complexity difference to further tune my model. I plan to continue exploring these models as I try to productionalize my product.
 
 Because of the speed of prediction and the limited amount of operating memory, it is realistic for me to work towards an online implementation of this system. I hope to spend much of the next week implementing a chatbot that will provide users with thumbnail images, descriptions, and links to the recommended games.
