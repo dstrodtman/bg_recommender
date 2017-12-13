@@ -14,11 +14,10 @@ class Recommender():
         self.item_bag = set()
         self.last_get = 0
         
-    def rate(self, game_name):
-        curr_gs = gs[game_name]
-        self.u_vec[curr_gs] = 1
-        self.liked.add(curr_gs)
-        self.rated.add(curr_gs)
+    def rate(self, gs):
+        self.u_vec[gs] = 1
+        self.liked.add(gs)
+        self.rated.add(gs)
         
     def get_bag(self, K=100):
         to_get = self.liked.difference(self.added_to_bag)
