@@ -43,10 +43,10 @@ class Recommender():
         self.item_bag_vec[list(self.item_bag)] = 1
         
     def get_cum_vecs(self, item_weight=.7, feat_weight=.3):
-        rated_sim_bag = np.multiply(corr_ect[list(self.rated)], self.feat_bag_vec)
+        rated_sim_bag = np.multiply(item_mat[list(self.rated)], self.feat_bag_vec)
         cum_corr_vec = np.sum(rated_sim_bag, axis=0)
         self.bias_corr = np.multiply(cum_corr_vec, item_bias)
-        rated_corr_bag = np.multiply(cos_sim_mat[list(self.rated)], self.item_bag_vec)
+        rated_corr_bag = np.multiply(feat_mat[list(self.rated)], self.item_bag_vec)
         cum_sim_vec = np.sum(rated_corr_bag, axis=0)
         self.bias_sim = np.multiply(cum_sim_vec, item_bias)
         self.comb_vec = np.add(np.multiply(self.bias_corr, item_weight), np.multiply(self.bias_sim, feat_weight))
