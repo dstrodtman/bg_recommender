@@ -5,7 +5,7 @@ from lib.helper import search
 
 class Recommender():
     
-    def __init__(self, n_games=10000):
+    def __init__(self, gs=gs, gname=gname, n_games=10000):
         self.u_vec = np.zeros(n_games)
         self.feat_bag = set()
         self.added_to_bag = set()
@@ -24,9 +24,9 @@ class Recommender():
         to_get = self.liked.difference(self.added_to_bag)
         while to_get:
             game = to_get.pop()
-            top_feat_items, sim = get_sim.by_feats(game, K, cos_sim_mat)
+            top_feat_items, sim = get_sim.by_feats(game, K, feat_mat)
             self.feat_bag.update(top_feat_items)
-            top_item_items, c_sim = get_sim.by_items(game, K, corr_ect)
+            top_item_items, c_sim = get_sim.by_items(game, K, item_mat)
             self.item_bag.update(top_item_items)
             self.added_to_bag.add(game)
         
@@ -53,7 +53,7 @@ class Recommender():
         self.comb_vec = np.add(np.multiply(self.bias_corr, item_weight), np.multiply(self.bias_sim, feat_weight))
         
     def get(self, n):
-        if self.rated > self.last_get:
+        if len(self.rated) > self.last_get:
             self.get_bag()
             self.clean_bag()
             self.update_bag_vec()
@@ -61,4 +61,4 @@ class Recommender():
         comb_recs = np.argsort(self.comb_vec)[:-(n+1):-1]
         self.top_games = search.gname(comb_recs)
         _ = [print(game) for game in self.top_games]
-        self.last_get = self.rated
+        self.last_get = len(self.rated)
