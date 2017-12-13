@@ -8,5 +8,6 @@ data/
 **/.ipynb_checkpoints
 **/.bash_history
 **/.viminfo
+**/..pyc
 .sublime-project
 .sublime-workspace
