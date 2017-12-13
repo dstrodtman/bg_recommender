@@ -5,7 +5,7 @@ from lib.helper import search
 
 class Recommender():
     
-    def __init__(self, gs, gname, n_games=10000):
+    def __init__(self, n_games=10000):
         self.u_vec = np.zeros(n_games)
         self.feat_bag = set()
         self.added_to_bag = set()
