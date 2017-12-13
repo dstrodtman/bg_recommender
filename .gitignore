@@ -9,5 +9,5 @@ data/
 **/.bash_history
 **/.viminfo
 **/..pyc
-.sublime-project
-.sublime-workspace
+*.sublime-project
+*.sublime-workspace
