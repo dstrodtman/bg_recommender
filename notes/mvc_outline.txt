@@ -1,0 +1,57 @@
+Postgres Database:
+- Will be hosted on its own instance. Should safely fit on a t2.micro with 20GB of storage.
+- Contains similarity lookup tables stored in 2 tables (feat_sim, item_sim) indexed by gs (serialized gameid, 0-9999)
+- Each row in current table becomes a binarized vector
+- Contains expansions lookup table stored in same format, where ALL (eventually) redundant relationships are stored for quick access
+- (PHASE 2) Contains a table for storing vectors of liked games by users of the application, which allows for persistence between sessions. Can also (potentially) add support to allow users to directly load their BGG user profiles to generate recommendations from their pre-existing data (especially useful if BGG users are my target audience; this framework will by necessity be built out as I develop better metrics to mathematically assess the predictive accuracy of my model)
+
+Model:
+- Responsible for querying the database, crunching numbers, and generating recommendations.
+- Receives input from controller and posts updates. Does not communicate anything directly to controller or view, but rather provides passive update for controller to listen for. Updates are timestamped and stored by a unique sessionID to ensure that data is correctly communicated. 
+
+Controller:
+- Essentially an API interface between the model and the view. Passes liked games list from view to model, and passes recommendations back to view.
+- Allows users to save their recommendation profile by using the model the pass liked games back into Postgres. First implementation will store these sessions by usernames provided by the users. Eventually, hope to implement hash keys that can be linked to different users based on the portal they're using to ensure security and uniqueness.
+- POSTS requests to model and listens for status updates.
+
+View:
+- Handles the user interface
+- Dicts to for quick lookup of gameid/gamename/gs are 295KB each--is this small enough to store in working memory in view, or should this be stored at model/controller level?
+- Will initially be implemented to run as an interactive command line program, which should translate quickly to flask/django/chatbot formats
+- User options:
+1. help : 
+		prints out help documentation for interacting with BGG recommender bot
+
+2. new : 
+		resets 'liked' games to 0 to start fresh session
+
+3. search <game name> :
+		queries BGG API, parses results, compares to games in database, displays top 10 results plus option for MORE (if more than 10 results returned)
+
+3. like	<game name> OR <int> :
+		adds game to LIKED if game name typed correctly, otherwise returns search results based on text entered. Passing a number 0-9 will add the corresponding game from the most recently displayed search results OR from the most recent view of the recommended games list
+
+4. list :
+		list games 10 at a time that have been LIKED in current session with MORE option
+		
+5. unlike <game name> OR <int> OR 'last' :
+		remove game from LIKED list by exact match to game name OR integer 0-9 from more recent list view. also allows removal of most recently added game.
+
+6. get :
+		queries model to generate recommendations, displayed 10 at a time with MORE option
+		
+7. info <int> :
+		displays details about the game, including the description. integer 0-9 corresponds to the most recent view of search or get results.
+		
+8. link <int> OR none :
+		generates link to BGG. integer 0-9 corresponds to the most recent view of search or get results. 'link' with no argument supported to provide link for most recent 'info' query
+		
+9. save <session name> :
+		allows users to save their current session with a provided name. queries for 'key phrase' to load session later, warning users that security is NOT guaranteed and passwords for other sites should not be used.
+		
+10. load <session name> :
+		allows users to load a past session with saved name. if session name matches previous session, queries for key phrase. if correct, loads saved session. allows users to share their sessions with others easily, if desired.
+
+
+
+
