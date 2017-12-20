@@ -1,0 +1,95 @@
+Objective:
+Develop a system for quickly serving board game recommendations with minimal user input, deployable across a range of interfaces.
+
+The problem:
+'But is it fun?'
+- Games and play are foundational to culture and society
+- Build community, encourage creativity and critical thinking, provide an outlet for competition, reward players with the gratification of winning
+- Dominoes, cards, chess, checkers, go, backgammon, Scrabble, Monopoly
+- Videogames, online gaming, Esports, fantasy sports
+- I posit that high-quality games CAN strengthen relationships, connecting children with their adult relatives, and building and strengthening friendships
+- While some games require a high level of skill and practice to master, well-balanced games can provide opportunities for players of all ages and skill levels to enjoy themselves and possibly win.
+- The important point: not all games are appropriate for all people or all settings, and finding the right game to bring people together can be a monumental task.
+
+So what should I play?
+- Big box stores are notorious for carrying mostly board games from large publishers like Parker Brothers and Milton Bradley
+- The market is saturated with cross-promotions for big franchises--while some of these games are of high quality, it is all too common that badly balanced games (or thinly veiled reimplementations of classic games) are given shelf space
+- Amazon does a poor job of ranking board games and providing substantive information about how a game is played, and commits 20% of each page to sponsored content.
+- Speciality toy stores MAY carry high quality games, but can have limited inventory and thus limit recommendations to what is on hand
+- Speciality board game stores generally have highly trained sales staff with a broad knowledge of their product, BUT these individuals can be extremely biased in their own preferences, not always matching recommendations accurately to the skill level of the customer. Also, many potential gamers don't have ready access to a quality shop with a large inventory.
+
+Enter boardgamegeek.com
+- A community-driven online database and forum for board games
+- Includes almost 1 million total games with descriptions, images, ratings, complexity scores, play times, user feedback, and discussion boards
+- Caters primarily to core gamers--individuals who would list 'board games' amongst their top interests when asked about themselves, and who equate complexity with quality
+
+Complexity
+- The site itself has a high barrier to entry.
+- Design and layout are confusing and off-putting
+- Many lists, including top rated games for a number of categories (if you know how to find them) and 'The Hotness' -- new games generating a lot of buzz
+- Many of 'your favorite games' have abysmal ranks on the site -- Clue, Monopoly, The Game of Life, Sorry, Risk all fall below 6/10
+- No recommendations, only links to user-generated 'GeekLists' that contain this game--essentially asking one stranger for games they loosely affiliate with this one
+- Ads: often esoteric, and (apparently) sold directly to advertisers through personal inquiries to the site. Commonly seen: Kickstarter campaigns for new board games, personalized/delux board game pieces, board game organizational equipment
+
+The solution
+- Utilize the robust data on the site to develop an algorithm for measuring similarity between games based on the features of those games, also taking into account user preferences
+- Package this model to make it easily accessible to board game seekers of all backgrounds, redirecting them to the appropriate page on BGG to get more information
+- Generate revenue for BGG through page views and clickthroughs to Amazon
+- Encourage participation in BGG for an expanded audience (further potential ad revenue and content creation)
+- Improve the quality of ratings on less 'core' games through inclusions of audiences with more exposure to and preference for these games
+- (Hopefully) generate enough revenue to hire a UX designer
+
+Considerations:
+- Scale of the data
+- Speed
+- Overhead/operating costs
+- Ease of use
+
+Features:
+- Explain SVD
+- Explain components
+- Explain cosine similarity
+
+Item-item similarity:
+- Explain collaborative filtering
+- Explain Pearson's correlation (w/ scaling)
+
+Precomputed tables:
+- Lookup tables for both feature cosine similarity and item-item correlation were precomputed and stored in PostgreSQL databases
+- Precomputed top games for each item, as well as a weighted combination of similarity scores
+
+Limitations:
+- Necessary taxonomy of games
+- Search functionality (to handle mispellings as well as multiple titles, shortened titles)
+- Offline testing of accuracy metrics
+- Algorithm needs further refinement
+- Still in developmental beta
+
+Strengths:
+- Serves robust recommendations in under 1ms (confirm with testing)
+- Can begin providing recommendations after 1 rating
+- Limited operating memory required per user session
+- Almost all computations handled offline; tables can be occasionally updated to reflect newly acquired data.
+- Can potentially integrate with BGG member pages to provide more robust recommendations to committed users of the site
+- Can be used to build preference profiles to serve better ads based on perceived preferences
+- Increase ad revenue by emphasizing ability to target ads to relevant customers
+
+Demo:
+
+
+
+Assessment:
+- Ideal assessment would be to roll out product and track click through to Amazon
+- Other metrics to capture:
+1. Average number of games rated
+2. Total counts for WHICH games are being rated
+3. Number of recommendations users request
+4. Number of item pages users view
+5. Number of shared recommendation lists
+
+
+Conclusion:
+By leveraging data provided by existing users of BGG into a user-friendly recommendation system deployable across the web, BGG can increase its site traffic, ad revenue, and Amazon sales revenue. Collection of user data during implementation will help to justify the minimal costs associated with hosting this service, and encourage improvement in data quality and UX design.
+
+Questions:
+

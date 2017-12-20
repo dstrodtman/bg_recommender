@@ -5,6 +5,31 @@ Postgres Database:
 - Contains expansions lookup table stored in same format, where ALL (eventually) redundant relationships are stored for quick access
 - (PHASE 2) Contains a table for storing vectors of liked games by users of the application, which allows for persistence between sessions. Can also (potentially) add support to allow users to directly load their BGG user profiles to generate recommendations from their pre-existing data (especially useful if BGG users are my target audience; this framework will by necessity be built out as I develop better metrics to mathematically assess the predictive accuracy of my model)
 
+### For fastest lookup:
+- Each item has it's top neighbors (50? 100?) stored as an array of indices.
+- What's the easiest way to handle difference between 0 and 1 indexing in sql/python?
+- Exclude expansions from base game for top sim lists--this will be expanded upon with further revision of expansions filtering
+
+SQL tables:
+*Note switch to 0 indexing for ease in Python
+
+CREATE TABLE rec_lookup (
+    gs INT PRIMARY KEY,
+    top_k INT[],
+    sim DOUBLE PRECISION[],
+    exp INT[]
+);
+    
+'SELECT * FROM rec_lookup WHERE gs IN ({});'.format(liked)
+
+item_bag = 
+
+
+- Get top K games from each sim list; set K to 50; each list stored as a column in a single table, so a single query will return both bags
+- Get expansions list for rated games (again, list of arrays)
+- Combine results into 3 separate sets, remove games from expansions list from each bag
+- Pull arrays for rated games
+
 Model:
 - Responsible for querying the database, crunching numbers, and generating recommendations.
 - Receives input from controller and posts updates. Does not communicate anything directly to controller or view, but rather provides passive update for controller to listen for. Updates are timestamped and stored by a unique sessionID to ensure that data is correctly communicated. 

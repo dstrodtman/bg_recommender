@@ -3,6 +3,19 @@ from lib import db
 from lib.recommend import get_sim
 from lib.helper import search
 
+
+liked_set = set()
+
+
+
+
+
+
+
+
+
+
+
 class Recommender():
     
     def __init__(self, n_games=10000):
