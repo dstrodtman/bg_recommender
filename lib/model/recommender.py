@@ -15,7 +15,7 @@ class Recommender():
         
     def update(self, c_liked):
         self.start = time()
-        if self.liked.symmetric_difference(c_liked):
+        if self.liked.symmetric_difference(set(c_liked)):
             self.liked = set(c_liked)
             self.get_liked()
             self.get_bag()
@@ -43,7 +43,8 @@ class Recommender():
     def get_exp(self):
         self.exp = set(self.liked)
         for row in range(len(self.sql_tuples)):
-            self.exp.update(self.sql_tuples[row][3])
+            if self.sql_tuples[row][3]:
+                self.exp.update(self.sql_tuples[row][3])
         
     def clean_bag(self):
         self.bag.difference_update(self.exp)
