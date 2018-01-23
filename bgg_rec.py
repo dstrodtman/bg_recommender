@@ -34,7 +34,7 @@ liked = set()
 liked_gs = set()
 
 rec_list = None
-
+link = None
 session = True
 
 while session == True:
@@ -61,6 +61,9 @@ while session == True:
     You can also add new games to your liked list and get an updated recommendation.
 
             """.format(*[gname[x] for x in curr_view]))
+        if link:
+            print(link)
+            link = None
     command = input()
     if command[:4] == 'like':
         game = command[5:]
@@ -97,7 +100,7 @@ while session == True:
             view_idx += 10
             curr_view = rec_list[view_idx:view_idx+10]
         elif command in ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']:
-            print('https://boardgamegeek.com/boardgame/{}/\n'.format(gid[curr_view[int(command)-1]]))
+            link = 'https://boardgamegeek.com/boardgame/{}/\n'.format(gid[curr_view[int(command)-1]])
 
     else:
         print("""

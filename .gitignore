@@ -1,4 +1,5 @@
 data/
+**/__pycache__
 **/images
 **/.cache
 **/.jupyter 
@@ -8,6 +9,6 @@ data/
 **/.ipynb_checkpoints
 **/.bash_history
 **/.viminfo
-**/..pyc
+**/.pyc
 *.sublime-project
 *.sublime-workspace
